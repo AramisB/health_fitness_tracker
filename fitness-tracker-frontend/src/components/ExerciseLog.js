@@ -1,28 +1,82 @@
 import React, { useState } from 'react';
+import '../styles/ExerciseLog.css';
+import { useAuth } from '../context/AuthContext';
 
 function ExerciseLog() {
+  const { user } = useAuth();
   const [exercise, setExercise] = useState('');
   const [duration, setDuration] = useState('');
   const [date, setDate] = useState('');
+  const [message, setMessage] = useState('');
 
-  const handleLogExercise = (e) => {
+  const handleLogExercise = async (e) => {
     e.preventDefault();
-    // Handle exercise log logic here
-    console.log('Exercise log submitted:', { exercise, duration, date });
+
+    const exerciseData = {
+      exercise,
+      duration,
+      date,
+      userId: user ? user._id : null,
+    };
+
+    console.log('Sending exercise data:', exerciseData);
+
+    try {
+      const response = await fetch('http://localhost:5000/api/log-exercise', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${user.token}`,
+        },
+        body: JSON.stringify(exerciseData),
+      });
+
+      console.log('Response status:', response.status);
+
+      if (response.ok) {
+        setMessage('Exercise log submitted successfully!');
+        setExercise('');
+        setDuration('');
+        setDate('');
+      } else {
+        const errorMessage = await response.text();
+        console.error('Error response:', errorMessage);
+        setMessage('Failed to submit exercise log');
+      }
+    } catch (error) {
+      console.error('Fetch error:', error);
+      setMessage('An error occurred. Please try again.');
+    }
   };
 
   return (
-    <div>
+    <div className="exercise-log-container">
       <h2>Log Exercise</h2>
+      {message && <p>{message}</p>}
       <form onSubmit={handleLogExercise}>
         <div>
           <label>Exercise:</label>
-          <input 
-            type="text" 
+          <select 
             value={exercise} 
             onChange={(e) => setExercise(e.target.value)} 
-            required 
-          />
+            required
+          >
+            <option value="">Select an exercise</option>
+            <option value="Running">Running</option>
+            <option value="Cycling">Cycling</option>
+            <option value="Walking">Walking</option>
+            <option value="Swimming">Swimming</option>
+            <option value="Jumping Rope">Jumping Rope</option>
+            <option value="Weightlifting">Weightlifting</option>
+            <option value="Bodyweight Exercises">Bodyweight Exercises</option>
+            <option value="Yoga">Yoga</option>
+            <option value="Pilates">Pilates</option>
+            <option value="Stretching">Stretching</option>
+            <option value="HIIT">HIIT</option>
+            <option value="Soccer">Soccer</option>
+            <option value="Basketball">Basketball</option>
+            <option value="Tennis">Tennis</option>
+          </select>
         </div>
         <div>
           <label>Duration (in minutes):</label>
@@ -30,7 +84,7 @@ function ExerciseLog() {
             type="number" 
             value={duration} 
             onChange={(e) => setDuration(e.target.value)} 
-            required 
+            required
           />
         </div>
         <div>
@@ -39,7 +93,7 @@ function ExerciseLog() {
             type="date" 
             value={date} 
             onChange={(e) => setDate(e.target.value)} 
-            required 
+            required
           />
         </div>
         <button type="submit">Log Exercise</button>

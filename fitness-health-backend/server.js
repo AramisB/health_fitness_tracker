@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const cors = require('cors'); // Add this line
+const cors = require('cors');
+const ExerciseLogRoutes = require('./routes/ExerciseLogRoutes');
 const connectDB = require('./config/db');
 const userRoutes = require('./routes/userRoutes');
 require('dotenv').config();
@@ -16,6 +17,7 @@ app.use(express.json());
 
 // Routes
 app.use('/api', userRoutes);
+app.use('/api/', ExerciseLogRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
