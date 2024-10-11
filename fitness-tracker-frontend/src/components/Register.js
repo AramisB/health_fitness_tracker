@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 import '../styles/Register.css';
 
 function Register() {
@@ -8,34 +9,20 @@ function Register() {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState(null);
+  const { register } = useAuth(); // Get the register function from context
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validate form
     if (password !== confirmPassword) {
       setError("Passwords do not match");
       return;
     }
 
     try {
-      const response = await fetch('http://localhost:5000/api/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ name, email, password, confirmPassword }),
-      });
-
-      const data = await response.json();
-      
-      if (!response.ok) {
-        throw new Error(data.msg);
-      }
-
-      alert(data.msg);
-      navigate('/login');
+      await register(name, email, password); // Call the register function
+      navigate('/'); // Redirect to the home page or dashboard after registration
     } catch (err) {
       setError(err.message);
     }

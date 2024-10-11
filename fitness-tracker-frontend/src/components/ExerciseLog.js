@@ -11,28 +11,28 @@ function ExerciseLog() {
 
   const handleLogExercise = async (e) => {
     e.preventDefault();
-
+  
     const exerciseData = {
       exercise,
       duration,
       date,
-      userId: user ? user._id : null,
+      userId: user ? user._id : null, // You can still include the userId if needed
     };
-
+  
     console.log('Sending exercise data:', exerciseData);
-
+  
     try {
       const response = await fetch('http://localhost:5000/api/log-exercise', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${user.token}`,
+          'Authorization': `Bearer ${user.token}`, // Access the token from the user object
         },
         body: JSON.stringify(exerciseData),
       });
-
+  
       console.log('Response status:', response.status);
-
+  
       if (response.ok) {
         setMessage('Exercise log submitted successfully!');
         setExercise('');

@@ -14,10 +14,12 @@ export const AuthProvider = ({ children }) => {
         },
         body: JSON.stringify({ email, password }),
       });
-
+  
       const data = await response.json();
       if (response.ok) {
-        setUser(data.user); // Set the user from response data
+        const userWithToken = { ...data.user, token: data.token }; // Combine user data and token
+        setUser(userWithToken); // Set the combined user object
+        localStorage.setItem('token', data.token); // Save the JWT in local storage
       } else {
         throw new Error(data.msg); // Handle error from server
       }
@@ -26,12 +28,35 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const register = async (name, email, password) => {
+    try {
+      const response = await fetch('http://localhost:5000/api/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name, email, password }),
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        setUser(data.user); // Set the user from response data
+        localStorage.setItem('token', data.token); // Save the JWT in local storage
+      } else {
+        throw new Error(data.msg); // Handle error from server
+      }
+    } catch (error) {
+      console.error('Registration failed:', error); // Log error
+    }
+  };
+
   const logout = () => {
-    setUser(null); // Reset user state
+    setUser(null);
+    localStorage.removeItem('token'); // Remove token on logout
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, login, register, logout }}>
       {children}
     </AuthContext.Provider>
   );

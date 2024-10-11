@@ -4,6 +4,8 @@ const cors = require('cors');
 const ExerciseLogRoutes = require('./routes/ExerciseLogRoutes');
 const connectDB = require('./config/db');
 const userRoutes = require('./routes/userRoutes');
+const GoalsRoutes = require('./routes/GoalsRoutes');
+const ProgressRoutes = require('./routes/ProgressRoutes');
 require('dotenv').config();
 
 const app = express();
@@ -17,7 +19,9 @@ app.use(express.json());
 
 // Routes
 app.use('/api', userRoutes);
-app.use('/api/', ExerciseLogRoutes);
+app.use('/api/log-exercise', ExerciseLogRoutes);
+app.use('/api/goals', GoalsRoutes);
+app.use('/api/progress', ProgressRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
