@@ -1,4 +1,5 @@
 const Progress = require('../models/ProgressModel');
+const ExerciseLog = require('../models/ExerciseLogModel');
 
 const createProgress = async (req, res) => {
   const { exerciseType, duration, caloriesBurned, date } = req.body;
@@ -19,13 +20,14 @@ const createProgress = async (req, res) => {
   }
 };
 
-// Get all progress entries for the authenticated user
+// Fetch all progress (exercise logs) for the authenticated user
 const getProgress = async (req, res) => {
   try {
-    const progress = await Progress.find({ user: req.user._id });
-    res.status(200).json({ progress });
+    const userId = req.user.id; // Assuming user ID is stored in the token
+    const exerciseLogs = await ExerciseLog.find({ userId }); // Find exercise logs for this user
+    res.json({ progress: exerciseLogs }); // Return the logs
   } catch (error) {
-    res.status(500).json({ msg: 'Failed to fetch progress', details: error.message });
+    res.status(500).json({ msg: 'Error fetching progress' });
   }
 };
 

@@ -66,9 +66,9 @@ function ExerciseLog() {
             <option value="Cycling">Cycling</option>
             <option value="Walking">Walking</option>
             <option value="Swimming">Swimming</option>
-            <option value="Jumping Rope">Jumping Rope</option>
+            <option value="JumpingRope">Jumping Rope</option>
             <option value="Weightlifting">Weightlifting</option>
-            <option value="Bodyweight Exercises">Bodyweight Exercises</option>
+            <option value="BodyweightExercises">Bodyweight Exercises</option>
             <option value="Yoga">Yoga</option>
             <option value="Pilates">Pilates</option>
             <option value="Stretching">Stretching</option>
