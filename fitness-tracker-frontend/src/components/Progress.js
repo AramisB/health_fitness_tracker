@@ -12,7 +12,7 @@ function Progress() {
     const fetchProgress = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await fetch('https://health-fitness-tracker-i3l4.vercel.app/api/progress', {
+        const response = await fetch('https://health-fitness-tracker-i3l4-gu5hlph7m-aramisbs-projects.vercel.app/api/progress', {
           method: 'GET',
           headers: {
             Authorization: `Bearer ${token}`,

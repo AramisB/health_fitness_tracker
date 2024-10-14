@@ -13,7 +13,7 @@ function Goals() {
     e.preventDefault();
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('https://health-fitness-tracker-i3l4.vercel.app/api/goals', {
+      const response = await fetch('https://health-fitness-tracker-i3l4-gu5hlph7m-aramisbs-projects.vercel.app/api/goals', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
