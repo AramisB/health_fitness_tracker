@@ -22,7 +22,7 @@ function ExerciseLog() {
     console.log('Sending exercise data:', exerciseData);
   
     try {
-      const response = await fetch('http://localhost:5000/api/log-exercise', {
+      const response = await fetch('https://health-fitness-tracker-i3l4.vercel.app/api/log-exercise', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
