@@ -7,7 +7,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      const response = await fetch('https://health-fitness-tracker-i3l4.vercel.app/api/login', {
+      const response = await fetch('health-fitness-tracker-9l7o.vercel.app/api/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
