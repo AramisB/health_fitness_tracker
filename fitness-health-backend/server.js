@@ -14,7 +14,9 @@ const app = express();
 connectDB();
 
 // Middleware
-app.use(cors()); // Enable CORS
+app.use(cors({
+    origin: 'https://health-fitness-tracker.vercel.app'
+  })); // Enable CORS
 app.use(express.json());
 
 // Routes
