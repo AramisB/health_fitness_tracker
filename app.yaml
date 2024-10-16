@@ -1,0 +1,25 @@
+name: health-fitness-tracker
+services:
+  - name: backend
+    github:
+      repo: AramisB/health_fitness_tracker
+      branch: main
+      path: fitness-health-backend
+    build_command: npm install
+    run_command: npm start
+    environment_slug: node-js
+    routes:
+      - path: /api/*
+        preserve_path: true
+
+  - name: frontend
+    github:
+      repo: AramisB/health_fitness_tracker
+      branch: main
+      path: fitness-tracker-frontend
+    build_command: npm install
+    run_command: npm run build
+    environment_slug: node-js
+    static_sites:
+      - path: /
+        build_output: /build
