@@ -1,7 +1,7 @@
 name: health-fitness-tracker
 services:
   - name: backend
-    path: fitness-health-backend
+    source_dir: ./fitness-health-backend
     build_command: npm install
     run_command: npm start
     environment_slug: node-js
@@ -10,7 +10,7 @@ services:
         preserve_path: true
 
   - name: frontend
-    path: fitness-tracker-frontend
+    source_dir: ./fitness-tracker-frontend
     build_command: npm install
     run_command: npm run build
     environment_slug: node-js
